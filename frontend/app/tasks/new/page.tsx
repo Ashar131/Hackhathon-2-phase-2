@@ -12,7 +12,7 @@ import { useToast } from '@/src/context/toast';
 const taskSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().optional(),
-  priority: z.enum(['low', 'medium', 'high', 'urgent']).default('medium'),
+  priority: z.enum(['low', 'medium', 'high', 'urgent']),
   dueDate: z.string().optional(),
   category: z.string().optional(),
 });
@@ -33,7 +33,11 @@ export default function CreateTaskPage() {
   } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
+      title: '',
+      description: '',
       priority: 'medium',
+      dueDate: '',
+      category: '',
     },
   });
 
