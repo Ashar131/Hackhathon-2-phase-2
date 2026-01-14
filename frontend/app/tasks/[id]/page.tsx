@@ -5,19 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { apiClient } from '@/src/lib/api';
 import AppShell from '@/src/components/AppShell';
 import { useToast } from '@/src/context/toast';
-
-interface Task {
-  id: string;
-  title: string;
-  description?: string;
-  status: 'active' | 'completed';
-  priority: 'low' | 'medium' | 'high' | 'urgent';
-  dueDate?: string;
-  category?: string;
-  userId: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Task } from '@/shared/types';
 
 export default function TaskDetailPage() {
   const { id } = useParams();
