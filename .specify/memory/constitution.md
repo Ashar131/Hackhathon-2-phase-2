@@ -1,55 +1,45 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT
+Version change: N/A -> 1.0.0
+Modified principles: N/A (new constitution)
+Added sections: All sections (initial constitution)
+Removed sections: N/A
+Templates requiring updates:
+  - .specify/templates/plan-template.md ✅ updated
+  - .specify/templates/spec-template.md ✅ updated
+  - .specify/templates/tasks-template.md ✅ updated
+  - .specify/templates/commands/*.md ⚠ pending
+Follow-up TODOs:
+  - RATIFICATION_DATE: Original adoption date unknown
+-->
+# Todo Full-Stack Web Application Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Spec-Driven Development (SDD) First
+All development follows structured specifications as the single source of truth; Specs inside /specs directory take precedence over code; If code conflicts with specs, specs must be followed; All undocumented features are prohibited.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Security-First Architecture
+Authentication must use Better Auth + JWT; JWT tokens must be sent in Authorization: Bearer header; Backend must verify JWT using shared secret; User isolation must be enforced on every request; No plaintext passwords or hardcoded secrets allowed.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### RESTful API Design (NON-NEGOTIABLE)
+All backend APIs must follow RESTful design; Endpoints must follow defined API specs; Task ownership must always be enforced; Backend must never trust user_id from request body alone; Authenticated user identity from JWT is the source of truth.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Monorepo Integrity
+Monorepo structure must be preserved; Frontend and backend are separate services; All persistent data stored in Neon Serverless PostgreSQL; SQLModel is the only ORM allowed; All backend APIs live under /api/*.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Full-Stack Separation
+Frontend uses Next.js App Router with TypeScript and Tailwind CSS; Backend uses FastAPI with proper HTTP status codes; Database operations use SQLModel; Frontend must attach JWT token to every API request; API calls must go through centralized API client.
 
-### [PRINCIPLE_6_NAME]
+### Production-Ready Code Quality
+Produce clean, readable, production-quality code; Follow existing folder and file structure; No unnecessary files; Prefer clarity over cleverness; Every protected route requires authentication; Never expose another user's data.
 
+## Technology Stack Requirements
+Frontend: Next.js App Router, TypeScript, Tailwind CSS, Shadcn UI; Backend: FastAPI; Database: Neon Serverless PostgreSQL; ORM: SQLModel only; Authentication: Better Auth + JWT; File structure must be preserved.
 
-[PRINCIPLE__DESCRIPTION]
-
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+1. Read feature spec; 2. Read API spec; 3. Read database spec; 4. Implement backend changes; 5. Implement frontend changes; 6. Ensure auth and user isolation is enforced; 7. Keep implementation aligned with specs.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+Constitution supersedes all other practices; Amendments require documentation and approval; All implementations must verify compliance with specs; Spec-Kit Plus templates must be followed; Architectural decisions must be documented when significant.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): Original adoption date unknown | **Last Amended**: 2026-01-08
