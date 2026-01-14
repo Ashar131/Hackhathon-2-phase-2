@@ -1,0 +1,21 @@
+{
+  "name": "Todo Backend API",
+  "description": "Backend API for Todo application",
+  "repository": "https://github.com/Ashar131/Hackhathon-2-phase-2",
+  "logo": "https://cdn.jsdelivr.net/gh/heroku/node-js-getting-started/public/node.svg",
+  "keywords": ["fastapi", "python", "todo", "api"],
+  "image": "heroku/python",
+  "env": {
+    "DATABASE_URL": {
+      "description": "Database URL for the application",
+      "value": "sqlite:///./todo_app.db"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "stack": "heroku-22"
+}
