@@ -57,7 +57,6 @@ export default function CreateTaskPage() {
       if (result.success) {
         addToast('Task created successfully!', 'success');
         router.push('/tasks'); // Redirect to tasks list after successful creation
-        router.refresh(); // Refresh to show the new task
       } else {
         addToast(result.error || 'Failed to create task', 'error');
       }

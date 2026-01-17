@@ -12,7 +12,7 @@ class ApiClient {
   constructor() {
     this.client = axios.create({
       baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api',
-      timeout: 30000, // Increased timeout to 30 seconds
+      timeout: 60000, // Increased timeout to 60 seconds for initial requests
       headers: {
         'Content-Type': 'application/json',
       },
@@ -28,7 +28,7 @@ class ApiClient {
   }
 
   // Task endpoints
-  async getTasks(params?: { page?: number; limit?: number; status?: string; priority?: string; search?: string }): Promise<ApiResponse<{ data: any[]; page: number; limit: number; total: number; totalPages: number }>> {
+  async getTasks(params?: { page?: number; limit?: number; status?: string; priority?: string; search?: string }): Promise<ApiResponse<any[]>> {
     try {
       const response = await this.client.get('/tasks', { params });
       return {

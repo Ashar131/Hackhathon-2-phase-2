@@ -2,9 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { usePathname } from 'next/navigation';
 
 // Mock navigation items - these would come from a config in a real app
 const navigation = [
@@ -22,11 +23,7 @@ export default function AppShell({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const [currentPath, setCurrentPath] = useState(typeof window !== 'undefined' ? window.location.pathname : '');
-
-  useEffect(() => {
-    setCurrentPath(router.pathname);
-  }, [router.pathname]);
+  const currentPath = usePathname();
 
   // Simple profile info - could be replaced with user data if needed
   const user = {

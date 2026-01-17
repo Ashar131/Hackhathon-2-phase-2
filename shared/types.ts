@@ -17,7 +17,6 @@ export interface Task {
   priority: 'low' | 'medium' | 'high' | 'urgent';
   dueDate?: string;
   category?: string;
-  userId: string;
   createdAt: string;
   updatedAt: string;
 }

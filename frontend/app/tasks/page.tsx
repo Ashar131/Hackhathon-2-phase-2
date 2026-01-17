@@ -29,8 +29,9 @@ export default function TasksPage() {
       };
 
       const response = await apiClient.getTasks(params);
-      if (response.success && response.data) {
-        setTasks(response.data.data || []);
+      if (response.success) {
+        // The API returns tasks directly, not in a paginated wrapper
+        setTasks(Array.isArray(response.data) ? response.data : []);
       } else {
         addToast(response.error || 'Failed to load tasks', 'error');
       }
@@ -44,7 +45,10 @@ export default function TasksPage() {
 
   const toggleTaskStatus = async (task: Task) => {
     try {
-      const updatedTask = { ...task, status: task.status === 'active' ? 'completed' : 'active' };
+      const updatedTask: Task = {
+        ...task,
+        status: task.status === 'active' ? 'completed' : 'active'
+      };
       const response = await apiClient.updateTask(task.id, updatedTask);
 
       if (response.success) {
@@ -110,7 +114,7 @@ export default function TasksPage() {
             <select
               className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as any)}
+              onChange={(e) => setStatusFilter(e.target.value as 'all' | 'active' | 'completed')}
             >
               <option value="all">All Statuses</option>
               <option value="active">Active</option>

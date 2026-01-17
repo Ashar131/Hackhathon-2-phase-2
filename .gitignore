@@ -120,3 +120,15 @@ Thumbs.db
 # Temporary Claude Code files
 tmpclaude-*
 frontend/tmpclaude-*
+
+# Database files
+*.db
+*.db.*
+
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# Test files
+test_db_connection.py

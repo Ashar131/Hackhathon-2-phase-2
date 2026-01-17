@@ -3,18 +3,25 @@ from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from pathlib import Path
 import os
+import logging
 from typing import Generator
-from .models import User, Task  # Import your models here
-from src.models.user import User  # noqa: F401
+from .models import Task  # Import your models here
 from src.models.task import Task  # noqa: F401
 
 # Use environment variable for database URL, with SQLite as fallback for development
+# Using a more reliable SQLite configuration for development
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./todo_app.db")
 
 # For Neon Serverless PostgreSQL in production, set DATABASE_URL environment variable to:
 # postgresql://username:password@ep-xxxxx.region.aws.neon.tech/dbname?sslmode=require
 
-engine = create_engine(DATABASE_URL, echo=False)
+# Configure SQLite engine with proper settings to avoid locking issues
+connect_args = {
+    "check_same_thread": False,
+    "timeout": 30,  # 30 second timeout for database locks
+} if "sqlite" in DATABASE_URL.lower() else {}
+
+engine = create_engine(DATABASE_URL, echo=False, connect_args=connect_args)
 
 
 def create_db_and_tables():
@@ -25,8 +32,13 @@ def create_db_and_tables():
 
 def get_session() -> Generator[Session, None, None]:
     """Get database session"""
-    with Session(engine) as session:
-        yield session
+    try:
+        with Session(engine) as session:
+            yield session
+    except Exception as e:
+        logger = logging.getLogger(__name__)
+        logger.error(f"Database session error: {e}")
+        raise
 
 
 # Enable foreign key constraints for SQLite

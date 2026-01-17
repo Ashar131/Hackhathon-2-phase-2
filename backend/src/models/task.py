@@ -29,10 +29,6 @@ class TaskBase(SQLModel):
 
 class Task(TaskBase, table=True):
     id: UUID = Field(default_factory=uuid4, primary_key=True)
-    user_id: UUID = Field(foreign_key="users.id", nullable=False)
-
-    # Relationship with User
-    user: "User" = Relationship(back_populates="tasks")
 
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
@@ -44,7 +40,6 @@ class TaskCreate(TaskBase):
 
 class TaskRead(TaskBase):
     id: UUID
-    user_id: UUID
     created_at: datetime
     updated_at: datetime
 
@@ -60,6 +55,5 @@ class TaskUpdate(SQLModel):
 
 class TaskPublic(TaskBase):
     id: UUID
-    user_id: UUID
     created_at: datetime
     updated_at: datetime

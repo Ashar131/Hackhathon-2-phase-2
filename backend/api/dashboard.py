@@ -1,34 +1,38 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session
+from sqlmodel import Session, select
 from typing import Dict
 from datetime import datetime, timedelta
 
 from src.database.database import get_session
-from src.models.user import User
 from src.models.task import Task
-from src.services.task_service import TaskService
-from src.utils.jwt import get_current_user_email
 
 router = APIRouter()
 
 @router.get("/stats")
 def get_dashboard_stats(
-    current_user_email: str = Depends(get_current_user_email),
     session: Session = Depends(get_session)
 ) -> Dict:
     """
-    Get dashboard statistics for the current user
+    Get dashboard statistics for all tasks
     """
-    # Get the current user
-    from sqlmodel import select
-    user_statement = select(User).where(User.email == current_user_email)
-    user = session.exec(user_statement).first()
+    # Count all tasks
+    total_tasks = session.exec(select(Task)).all()
+    total_count = len(total_tasks)
 
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+    completed_tasks = [task for task in total_tasks if task.status == "completed"]
+    active_tasks = [task for task in total_tasks if task.status == "active"]
 
-    # Use the task service to get stats
-    task_service = TaskService(session)
-    stats = task_service.get_user_task_stats(user.id)
+    # Calculate other stats
+    urgent_tasks = [task for task in total_tasks if task.priority == "urgent"]
+    high_priority_tasks = [task for task in total_tasks if task.priority == "high"]
+
+    stats = {
+        "total": total_count,
+        "completed": len(completed_tasks),
+        "active": len(active_tasks),
+        "urgent": len(urgent_tasks),
+        "high_priority": len(high_priority_tasks),
+        "completion_rate": (len(completed_tasks) / total_count * 100) if total_count > 0 else 0
+    }
 
     return stats
