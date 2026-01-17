@@ -21,6 +21,8 @@ const nextConfig = {
       }
     ]
   },
+  // Specify the output file tracing root to resolve the multiple lockfiles warning
+  outputFileTracingRoot: process.env.VERCEL_PROJECT_ROOT || undefined,
   // Remove output: 'export' since this is a dynamic app that connects to an API
   // trailingSlash: true, // Only use this if needed for specific routing requirements
 }
